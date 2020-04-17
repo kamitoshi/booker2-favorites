@@ -1,0 +1,49 @@
+
+<% comments.first(3).each do |comment| %>
+  <% unless comment.id.nil? %>
+    <div class="comment-box">
+      <div class="comment-profile">
+        <%= attachment_image_tag comment.user, :profile_image, fallback: "no_image.jpg", class:"comment-image", size: "40x40" %>
+        <p><%= link_to "@#{comment.user.name}", user_path(comment.user.id) %></p>
+      </div>
+      <div class="comment-text">
+        <div class="comment-entry">
+          <%= comment.content %>
+        </div>
+      </div>
+    </div>
+    <div class="comment-date pull-right">
+      <% if comment.user == current_user %>
+        <%= link_to "削除", book_comment_path(book_id:@book.id, id:comment.id), method: :delete, remote: true, class: "comment_destroy" %>
+      <% end %>
+      <%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+    </div>
+    <hr>
+  <% end %>
+<% end %>
+<!-- コメント内容(3件目以降) ------------------------------------------------------------------>
+<div class="collapse" id="collapseExample">
+  <% comments.offset(3).each do |comment| %>
+    <% unless comment.id.nil? %>
+      <div id="comment-<%= comment.id %>" class="comment-box">
+        <div class="comment-profile">
+          <%= attachment_image_tag comment.user, :profile_image, fallback: "no_image.jpg", class:"comment-image", size: "40x40" %>
+          <p><%= link_to "@#{comment.user.name}", user_path(comment.user.id) %></p>
+        </div>
+        <div class="comment-text">
+          <div class="comment-entry">
+            <%= comment.content %>
+          </div>
+        </div>
+      </div>
+      <div class="comment-date pull-right">
+        <% if comment.user == current_user %>
+          <%= link_to "削除", book_comment_path(book_id:@book.id, id:comment.id), method: :delete, remote: true, class: "comment_destroy" %>
+        <% end %>
+        <%= comment.created_at.strftime('%Y/%m/%d %H:%M:%S') %>
+      </div>
+      <hr>
+    <% end %>
+  <% end %>
+</div>
+<h6 class="more center" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">もっと見る....</h6>

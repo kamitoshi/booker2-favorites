@@ -36,6 +36,7 @@
 					<td id="favirote-<%= @book.id %>">
 						<%= render "books/favorite",book: book %>
 					</td>
+					<td>コメント　(<%= book.comments.count %>)</td>
 				</tr>
 				<% end %>
 			</tbody>

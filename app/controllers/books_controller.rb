@@ -2,7 +2,9 @@ class BooksController < ApplicationController
 	before_action :correct_user, only:[:edit, :update, :destroy]
 
   def show
-  	@book = Book.find(params[:id])
+		@book = Book.find(params[:id])
+		@comment = Comment.new
+    @comments = @book.comments.order(created_at: :desc)
   end
 
   def index
